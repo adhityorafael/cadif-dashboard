@@ -33,6 +33,10 @@ Jika Anda ingin menjalankan atau memodifikasi aplikasi ini di komputer Anda send
 
 2. **Install library yang dibutuhkan**
    Pastikan Anda memiliki file requirements.txt yang memuat library dasar (seperti streamlit, pandas, numpy, plotly), lalu jalankan:
-   
+   ```bash
+   pip install -r requirements.txt
    
 3. **Jalankan aplikasi Streamlit**
+   Aplikasi dirangkai dalam satu entry point utama. Jalankan perintah berikut di terminal:
+   ```bash
+   streamlit run app.py
