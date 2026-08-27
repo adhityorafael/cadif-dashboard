@@ -9,6 +9,8 @@
 
 Saat ini, dasbor dikonfigurasi menggunakan **Studi Kasus Penderita Serangan Jantung**. Namun, karena sifat algoritma pemodelan matematika di dalamnya yang dinamis, kode pada sistem ini **sangat fleksibel dan dapat diedit untuk memproses dataset dari domain lain** (misalnya bisnis, sosial, atau lingkungan).
 
+Tautan: https://cadif-dashboard.streamlit.app/
+
 ### Sumber Data
 Dataset bawaan yang digunakan pada sistem ini berasal dari indikator kesehatan CDC (BRFSS 2022) yang dipublikasikan di Kaggle: 
 [Personal Key Indicators of Heart Disease](https://www.kaggle.com/datasets/kamilpytlak/personal-key-indicators-of-heart-disease/data)
