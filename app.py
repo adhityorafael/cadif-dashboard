@@ -46,6 +46,22 @@ def main():
     )
 
     # ==============================================================
+    # INJEKSI CSS: MENGUBAH TEKS SIDEBAR MENJADI PUTIH
+    # ==============================================================
+    st.markdown("""
+        <style>
+            [data-testid="stSidebar"] * {
+                color: white !important;
+            }
+            /* Menyesuaikan warna radio button agar tetap terlihat */
+            .st-radio label p {
+                color: white !important;
+            }
+        </style>
+        """, unsafe_allow_html=True)
+    # ==============================================================
+    
+    # ==============================================================
     # SIDEBAR NAVIGATION
     # ==============================================================
     st.sidebar.title("🧬 CADIF")
