@@ -58,8 +58,11 @@ def main():
                 color: white !important;
             }
             
-            /* 2. Mengubah teks di dalam kotak Upload File menjadi putih */
-            [data-testid="stFileUploadDropzone"] * {
+            /* 2. Menembus prioritas CSS bawaan pada kotak Upload */
+            [data-testid="stFileUploadDropzone"] div,
+            [data-testid="stFileUploadDropzone"] span,
+            [data-testid="stFileUploadDropzone"] small,
+            [data-testid="stFileUploadDropzone"] p {
                 color: white !important;
             }
         </style>
