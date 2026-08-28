@@ -1,0 +1,12 @@
+[theme]
+# Warna latar Sidebar (Biru Navy ITB)
+secondaryBackgroundColor = "#003057"
+
+# Warna utama untuk tombol, slider, dan loading bar (Emas ITB)
+primaryColor = "#F2A900"
+
+# Warna latar area utama (tengah)
+backgroundColor = "#F8F9FA"
+
+# Warna teks utama
+textColor = "#212529"
