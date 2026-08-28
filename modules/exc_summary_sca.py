@@ -32,7 +32,7 @@ def run(df_decision):
             "Low": "#b3ffb3", "Asosiasi Negatif": "#99ccff"
         },
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     csv_data = df_decision.to_csv(index=False).encode("utf-8")
     st.download_button(label="Unduh Hasil (CSV)", data=csv_data, file_name="sca_hasil.csv", mime="text/csv")
