@@ -46,7 +46,7 @@ def run(df_decision):
             "Asosiasi Negatif": "#99ccff" # <--- Diselaraskan dengan Modul 4
         },
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     # ---------------------------------------------------------
     # GENERATOR TABEL INTERPRETASI OTOMATIS
