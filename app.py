@@ -135,23 +135,45 @@ def main():
     # ==============================================================
     else:
         st.title("Mode Multivariate MCA")
-        st.caption(
-            "Analisis multivariat untuk mengurai interaksi kompleks "
-            "berbagai faktor risiko secara simultan melalui Matriks Burt."
-        )
+        st.caption("Analisis multivariat untuk mengurai interaksi kompleks berbagai faktor risiko secara simultan melalui Matriks Burt.")
 
-        # Menggunakan modul khusus MCA
-        mca_data = data_management_mca.run()
-        if mca_data is not None:
-            mca_result = mca_engine.run(mca_data)
+        # Membuat 5 Tab Navigasi
+        tab1, tab2, tab3, tab4, tab5 = st.tabs([
+            "📂 1. Data Management", 
+            "🧭 2. MCA Engine", 
+            "⚖️ 3. Risk Intelligence", 
+            "🚦 4. Decision Engine", 
+            "📈 5. Executive Summary"
+        ])
+
+        # Mengisolasi setiap luaran modul ke dalam tab masing-masing
+        with tab1:
+            mca_data = data_management_mca.run()
+        
+        with tab2:
+            if mca_data is not None:
+                mca_result = mca_engine.run(mca_data)
+            else:
+                st.info("Selesaikan unggah data di Tab 1 terlebih dahulu.")
+                mca_result = None
+                
+        with tab3:
             if mca_result is not None:
-                # Masuk ke Universal Engine (berbagi mesin yang sama)
                 df_risk = risk_engine.run(mca_result)
-                if df_risk is not None:
-                    df_decision = decision_engine_mca.run(df_risk)
-                    if df_decision is not None:
-                        exc_summary_mca.run(df_decision)
-
+            else:
+                st.info("Selesaikan Analisis MCA di Tab 2 terlebih dahulu.")
+                df_risk = None
+                
+        with tab4:
+            if df_risk is not None:
+                df_decision = decision_engine_mca.run(df_risk)
+            else:
+                st.info("Selesaikan perhitungan TOPSIS di Tab 3 terlebih dahulu.")
+                df_decision = None
+                
+        with tab5:
+            if df_decision is not None:
+                exc_summary_mca.run(df_decision)
 
 if __name__ == "__main__":
     main()
