@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#F2A900" # Emas ITB untuk elemen interaktif (slider, tombol)
+backgroundColor = "#F5F5F5" # Abu-abu sangat terang agar grafik Plotly menonjol
+secondaryBackgroundColor = "#003057" # ITB Navy untuk warna latar Sidebar
+textColor = "#333333" # Abu-abu gelap untuk keterbacaan teks
+font = "sans serif"
