@@ -45,24 +45,23 @@ def main():
         layout="wide",
     )
 
-    # ==============================================================
-    # INJEKSI CSS: KUSTOMISASI WARNA TEKS SIDEBAR & UPLOADER
+   # ==============================================================
+    # INJEKSI CSS: HANYA SIDEBAR YANG BIRU NAVY & TEKS PUTIH
     # ==============================================================
     st.markdown("""
         <style>
-            /* 1. Mengubah seluruh teks di Sidebar menjadi putih */
+            /* 1. Mengubah latar belakang khusus Sidebar menjadi Biru Navy ITB */
+            [data-testid="stSidebar"] {
+                background-color: #003057 !important;
+            }
+            
+            /* 2. Mengubah seluruh teks di dalam Sidebar menjadi putih */
             [data-testid="stSidebar"] * {
                 color: white !important;
             }
-            .st-radio label p {
-                color: white !important;
-            }
             
-            /* 2. Menembus prioritas CSS bawaan pada kotak Upload */
-            [data-testid="stFileUploadDropzone"] div,
-            [data-testid="stFileUploadDropzone"] span,
-            [data-testid="stFileUploadDropzone"] small,
-            [data-testid="stFileUploadDropzone"] p {
+            /* 3. Menyesuaikan teks pada pilihan mode (radio button) */
+            [data-testid="stSidebar"] .st-radio label p {
                 color: white !important;
             }
         </style>
