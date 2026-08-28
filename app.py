@@ -44,29 +44,6 @@ def main():
         page_icon="⚕️",
         layout="wide",
     )
-
-   # ==============================================================
-    # INJEKSI CSS: HANYA SIDEBAR YANG BIRU NAVY & TEKS PUTIH
-    # ==============================================================
-    st.markdown("""
-        <style>
-            /* 1. Mengubah latar belakang khusus Sidebar menjadi Biru Navy ITB */
-            [data-testid="stSidebar"] {
-                background-color: #003057 !important;
-            }
-            
-            /* 2. Mengubah seluruh teks di dalam Sidebar menjadi putih */
-            [data-testid="stSidebar"] * {
-                color: white !important;
-            }
-            
-            /* 3. Menyesuaikan teks pada pilihan mode (radio button) */
-            [data-testid="stSidebar"] .st-radio label p {
-                color: white !important;
-            }
-        </style>
-        """, unsafe_allow_html=True)
-    # ==============================================================
     
     # ==============================================================
     # SIDEBAR NAVIGATION
