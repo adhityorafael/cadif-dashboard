@@ -1,6 +1,24 @@
 """
 CADIF & MCADIF Main Application
 Entry point untuk aplikasi Streamlit.
+
+Jalankan dengan: streamlit run app.py
+(atau: python -m streamlit run app.py)
+
+Struktur project:
+    app.py                          <- file ini, merangkai semua modul
+    modules/
+        data_management_sca.py      <- Modul 1 (SCA)
+        data_management_mca.py      <- Modul 1 (MCA)
+        sca_engine.py               <- Modul 2 (SCA)
+        mca_engine.py               <- Modul 2 (MCA)
+        risk_engine.py              <- Modul 3 (TOPSIS)
+        decision_engine_sca.py      <- Modul 4 (Decision)
+        decision_engine_sca.py      <- Modul 4 (Decision)
+        exc_summary_sca.py          <- Modul 5 (Executive Summary)
+        exc_summary_mca.py          <- Modul 5 (Executive Summary)
+    config/
+        decision_rules.py           <- threshold & rekomendasi (mudah diedit)
 """
 
 import streamlit as st
@@ -47,7 +65,7 @@ def main():
         st.header("🧩 Arsitektur CADIF")
         st.caption("Alur Pemrosesan Pipa Data:")
                 
-        # 1. Tahap Data
+        # 1. Tahap Data (Percabangan)
         st.markdown("⬇️ **Tahap 1: Data Management**")
         c1, c2 = st.columns(2)
         with c1:
@@ -59,7 +77,7 @@ def main():
         st.markdown("⬇️ **Tahap 2: SCA/MCA Engine**")
         st.success("**Correspondence Analysis**\n\nContrib • Cos² • Target")
 
-        # 3. Tahap Pembobotan
+        # 3. Tahap Pembobotan (Risk Intelligence)
         st.markdown("⬇️ **Tahap 3: Risk Intelligence**")
         st.warning("**Multicriteria Engine**\n\nEWM ➔ TOPSIS")
 
@@ -72,10 +90,18 @@ def main():
         st.info("**Executive Summary**\n\nDashboard & Reporting")
        
         st.markdown("---")
+
+        # =========================================================
+        # PENAMBAHAN LENCANA KONTEKS STUDI KASUS
+        # =========================================================
         st.header("Lingkup Analisis Saat Ini:")
-        st.info("🩺 Studi Kasus Penderita Serangan Jantung")
+        st.info(
+            "🩺 Studi Kasus Penderita Serangan Jantung"
+        )
         st.markdown("---")
+        # =========================================================
         
+        # Identitas Pembuat
         st.caption(
             "**Dikembangkan oleh:**\n\n"
             "**Adhityo Rafael A. Sigit (10122020)**\n\n"
@@ -94,8 +120,10 @@ def main():
 
         df_kontingensi = data_management_sca.run()
         if df_kontingensi is not None:
+            # Perubahan nama variabel dari ca_result menjadi sca_result
             sca_result = sca_engine.run(df_kontingensi)
             if sca_result is not None:
+                # Masuk ke Universal Engine
                 df_risk = risk_engine.run(sca_result)
                 if df_risk is not None:
                     df_decision = decision_engine_sca.run(df_risk)
@@ -103,49 +131,27 @@ def main():
                         exc_summary_sca.run(df_decision)
 
     # ==============================================================
-    # RUTE 2: MULTIVARIATE MCA (Analisis Serentak) DENGAN TABS
+    # RUTE 2: MULTIVARIATE MCA (Analisis Serentak)
     # ==============================================================
     else:
         st.title("Mode Multivariate MCA")
-        st.caption("Analisis multivariat untuk mengurai interaksi kompleks berbagai faktor risiko secara simultan melalui Matriks Burt.")
+        st.caption(
+            "Analisis multivariat untuk mengurai interaksi kompleks "
+            "berbagai faktor risiko secara simultan melalui Matriks Burt."
+        )
 
-        # Membuat 5 Tab Navigasi (Nama disingkat agar pas di layar)
-        tab1, tab2, tab3, tab4, tab5 = st.tabs([
-            "📂 1. Data", 
-            "🧭 2. MCA Engine", 
-            "⚖️ 3. TOPSIS", 
-            "🚦 4. Prioritas", 
-            "📈 5. Summary"
-        ])
-
-        # Mengisolasi setiap luaran modul ke dalam tab masing-masing
-        with tab1:
-            mca_data = data_management_mca.run()
-        
-        with tab2:
-            if mca_data is not None:
-                mca_result = mca_engine.run(mca_data)
-            else:
-                st.info("Selesaikan unggah data di Tab 1 terlebih dahulu.")
-                mca_result = None
-                
-        with tab3:
+        # Menggunakan modul khusus MCA
+        mca_data = data_management_mca.run()
+        if mca_data is not None:
+            mca_result = mca_engine.run(mca_data)
             if mca_result is not None:
+                # Masuk ke Universal Engine (berbagi mesin yang sama)
                 df_risk = risk_engine.run(mca_result)
-            else:
-                st.info("Selesaikan Analisis MCA di Tab 2 terlebih dahulu.")
-                df_risk = None
-                
-        with tab4:
-            if df_risk is not None:
-                df_decision = decision_engine_mca.run(df_risk)
-            else:
-                st.info("Selesaikan perhitungan TOPSIS di Tab 3 terlebih dahulu.")
-                df_decision = None
-                
-        with tab5:
-            if df_decision is not None:
-                exc_summary_mca.run(df_decision)
+                if df_risk is not None:
+                    df_decision = decision_engine_mca.run(df_risk)
+                    if df_decision is not None:
+                        exc_summary_mca.run(df_decision)
+
 
 if __name__ == "__main__":
     main()
