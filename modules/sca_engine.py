@@ -196,6 +196,6 @@ def run(df_kontingensi):
     fig.add_vline(x=0, line_color="gray", line_width=1, line_dash="dot")
 
     # Tampilkan di Streamlit
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     return sca_result
