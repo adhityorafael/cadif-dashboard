@@ -46,15 +46,20 @@ def main():
     )
 
     # ==============================================================
-    # INJEKSI CSS: MENGUBAH TEKS SIDEBAR MENJADI PUTIH
+    # INJEKSI CSS: KUSTOMISASI WARNA TEKS SIDEBAR & UPLOADER
     # ==============================================================
     st.markdown("""
         <style>
+            /* 1. Mengubah seluruh teks di Sidebar menjadi putih */
             [data-testid="stSidebar"] * {
                 color: white !important;
             }
-            /* Menyesuaikan warna radio button agar tetap terlihat */
             .st-radio label p {
+                color: white !important;
+            }
+            
+            /* 2. Mengubah teks di dalam kotak Upload File menjadi putih */
+            [data-testid="stFileUploadDropzone"] * {
                 color: white !important;
             }
         </style>
