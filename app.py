@@ -5,18 +5,20 @@ Entry point untuk aplikasi Streamlit.
 
 import streamlit as st
 
-# Impor Langsung (Tanpa 'from modules') karena file menumpuk di halaman depan GitHub
-import data_management_sca
-import sca_engine
-import decision_engine_sca
-import exc_summary_sca
+# Impor Modul SCA (Bivariat)
+from modules import data_management_sca
+from modules import sca_engine
+from modules import decision_engine_sca
+from modules import exc_summary_sca
 
-import data_management_mca
-import mca_engine
-import decision_engine_mca
-import exc_summary_mca
+# Impor Modul MCA (Multivariat)
+from modules import data_management_mca
+from modules import mca_engine
+from modules import decision_engine_mca
+from modules import exc_summary_mca
 
-import risk_engine
+# Impor Modul Universal (TOPSIS, Decision, Executive Summary)
+from modules import risk_engine
 
 def main():
     st.set_page_config(
@@ -45,6 +47,7 @@ def main():
         st.header("🧩 Arsitektur CADIF")
         st.caption("Alur Pemrosesan Pipa Data:")
                 
+        # 1. Tahap Data
         st.markdown("⬇️ **Tahap 1: Data Management**")
         c1, c2 = st.columns(2)
         with c1:
@@ -52,15 +55,19 @@ def main():
         with c2:
             st.info("**MCA**\n\nBurt Matrix")
 
+        # 2. Tahap Geometri
         st.markdown("⬇️ **Tahap 2: SCA/MCA Engine**")
         st.success("**Correspondence Analysis**\n\nContrib • Cos² • Target")
 
+        # 3. Tahap Pembobotan
         st.markdown("⬇️ **Tahap 3: Risk Intelligence**")
         st.warning("**Multicriteria Engine**\n\nEWM ➔ TOPSIS")
 
+        # 4. Tahap Keputusan Klinis
         st.markdown("⬇️ **Tahap 4: Clinical Decision**")
         st.error("**Decision Engine**\n\nPriority Score & Rules")
 
+        # 5. Output
         st.markdown("⬇️ **Tahap 5: Output**")
         st.info("**Executive Summary**\n\nDashboard & Reporting")
        
@@ -76,11 +83,14 @@ def main():
         )    
 
     # ==============================================================
-    # RUTE 1: BIVARIATE SCA
+    # RUTE 1: BIVARIATE SCA (Analisis Tunggal)
     # ==============================================================
     if mode == "📊 Bivariat AKS (1 Faktor Risiko)":
         st.title("Mode Bivariate SCA")
-        st.caption("Analisis univariat untuk mengevaluasi korelasi murni dari satu faktor risiko tunggal terhadap target penyakit.")
+        st.caption(
+            "Analisis univariat untuk mengevaluasi korelasi murni dari "
+            "satu faktor risiko tunggal terhadap target penyakit."
+        )
 
         df_kontingensi = data_management_sca.run()
         if df_kontingensi is not None:
@@ -93,12 +103,13 @@ def main():
                         exc_summary_sca.run(df_decision)
 
     # ==============================================================
-    # RUTE 2: MULTIVARIATE MCA DENGAN TABS
+    # RUTE 2: MULTIVARIATE MCA (Analisis Serentak) DENGAN TABS
     # ==============================================================
     else:
         st.title("Mode Multivariate MCA")
         st.caption("Analisis multivariat untuk mengurai interaksi kompleks berbagai faktor risiko secara simultan melalui Matriks Burt.")
 
+        # Membuat 5 Tab Navigasi (Nama disingkat agar pas di layar)
         tab1, tab2, tab3, tab4, tab5 = st.tabs([
             "📂 1. Data", 
             "🧭 2. MCA Engine", 
@@ -107,6 +118,7 @@ def main():
             "📈 5. Summary"
         ])
 
+        # Mengisolasi setiap luaran modul ke dalam tab masing-masing
         with tab1:
             mca_data = data_management_mca.run()
         
