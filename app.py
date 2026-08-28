@@ -131,13 +131,16 @@ def main():
                         exc_summary_sca.run(df_decision)
 
     # ==============================================================
-    # RUTE 2: MULTIVARIATE MCA (Analisis Serentak)
+    # RUTE 2: MULTIVARIATE MCA DENGAN TABS & SESSION STATE
     # ==============================================================
     else:
         st.title("Mode Multivariate MCA")
         st.caption("Analisis multivariat untuk mengurai interaksi kompleks berbagai faktor risiko secara simultan melalui Matriks Burt.")
 
-        # Membuat 5 Tab Navigasi
+        # Inisialisasi Session State agar data tidak hilang saat pindah tab
+        if "mca_data" not in st.session_state:
+            st.session_state.mca_data = None
+
         tab1, tab2, tab3, tab4, tab5 = st.tabs([
             "📂 1. Data Management", 
             "🧭 2. MCA Engine", 
@@ -146,15 +149,17 @@ def main():
             "📈 5. Executive Summary"
         ])
 
-        # Mengisolasi setiap luaran modul ke dalam tab masing-masing
         with tab1:
-            mca_data = data_management_mca.run()
+            # Simpan hasil unggahan ke Session State
+            data_baru = data_management_mca.run()
+            if data_baru is not None:
+                st.session_state.mca_data = data_baru
         
         with tab2:
-            if mca_data is not None:
-                mca_result = mca_engine.run(mca_data)
+            if st.session_state.mca_data is not None:
+                mca_result = mca_engine.run(st.session_state.mca_data)
             else:
-                st.info("Selesaikan unggah data di Tab 1 terlebih dahulu.")
+                st.info("Selesaikan pengisian Form dan Unggah Data di Tab 1 terlebih dahulu.")
                 mca_result = None
                 
         with tab3:
