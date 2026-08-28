@@ -44,7 +44,7 @@ def main():
         page_icon="⚕️",
         layout="wide",
     )
-    
+
     # ==============================================================
     # SIDEBAR NAVIGATION
     # ==============================================================
@@ -131,54 +131,27 @@ def main():
                         exc_summary_sca.run(df_decision)
 
     # ==============================================================
-    # RUTE 2: MULTIVARIATE MCA DENGAN TABS & SESSION STATE
+    # RUTE 2: MULTIVARIATE MCA (Analisis Serentak)
     # ==============================================================
     else:
         st.title("Mode Multivariate MCA")
-        st.caption("Analisis multivariat untuk mengurai interaksi kompleks berbagai faktor risiko secara simultan melalui Matriks Burt.")
+        st.caption(
+            "Analisis multivariat untuk mengurai interaksi kompleks "
+            "berbagai faktor risiko secara simultan melalui Matriks Burt."
+        )
 
-        # Inisialisasi Session State agar data tidak hilang saat pindah tab
-        if "mca_data" not in st.session_state:
-            st.session_state.mca_data = None
-
-        tab1, tab2, tab3, tab4, tab5 = st.tabs([
-            "📂 1. Data Management", 
-            "🧭 2. MCA Engine", 
-            "⚖️ 3. Risk Intelligence", 
-            "🚦 4. Decision Engine", 
-            "📈 5. Executive Summary"
-        ])
-
-        with tab1:
-            # Simpan hasil unggahan ke Session State
-            data_baru = data_management_mca.run()
-            if data_baru is not None:
-                st.session_state.mca_data = data_baru
-        
-        with tab2:
-            if st.session_state.mca_data is not None:
-                mca_result = mca_engine.run(st.session_state.mca_data)
-            else:
-                st.info("Selesaikan pengisian Form dan Unggah Data di Tab 1 terlebih dahulu.")
-                mca_result = None
-                
-        with tab3:
+        # Menggunakan modul khusus MCA
+        mca_data = data_management_mca.run()
+        if mca_data is not None:
+            mca_result = mca_engine.run(mca_data)
             if mca_result is not None:
+                # Masuk ke Universal Engine (berbagi mesin yang sama)
                 df_risk = risk_engine.run(mca_result)
-            else:
-                st.info("Selesaikan Analisis MCA di Tab 2 terlebih dahulu.")
-                df_risk = None
-                
-        with tab4:
-            if df_risk is not None:
-                df_decision = decision_engine_mca.run(df_risk)
-            else:
-                st.info("Selesaikan perhitungan TOPSIS di Tab 3 terlebih dahulu.")
-                df_decision = None
-                
-        with tab5:
-            if df_decision is not None:
-                exc_summary_mca.run(df_decision)
+                if df_risk is not None:
+                    df_decision = decision_engine_mca.run(df_risk)
+                    if df_decision is not None:
+                        exc_summary_mca.run(df_decision)
+
 
 if __name__ == "__main__":
     main()
