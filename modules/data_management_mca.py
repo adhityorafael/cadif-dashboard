@@ -165,3 +165,4 @@ def run():
                 col2.dataframe(N_sup.iloc[:5, :], use_container_width=True)
 
     return df_kontingensi
+return None
