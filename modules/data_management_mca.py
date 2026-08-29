@@ -154,15 +154,18 @@ def run():
             st.success(
                 "Matriks Burt berhasil dibuat! Ruang multivariat siap dianalisis."
             )
+            col1, col2 = st.columns(2)
             
-            # Bungkus tabel mentah ke dalam Expander (Bisa di-klik untuk buka/tutup)
-            with st.expander("🔍 Klik untuk melihat pratinjau Matriks Burt & Suplemen"):
-                col1, col2 = st.columns(2)
-                col1.write("Burt Matrix (Sebagian):")
-                col1.dataframe(B.iloc[:5, :5], use_container_width=True)
-                
-                col2.write("Sup Matrix:")
-                col2.dataframe(N_sup.iloc[:5, :], use_container_width=True)
+            col1.write("Burt Matrix (Sebagian):")
+            col1.dataframe(B.iloc[:5, :5])
+            
+            col2.write("Sup Matrix:")
+            col2.dataframe(N_sup.iloc[:5, :])
+
+            df_kontingensi = {
+                "burt_matrix": B,
+                "sup_matrix": N_sup,
+                "target_col": f"{kolom_outcome}={target_value}",
+            }
 
     return df_kontingensi
-return None
