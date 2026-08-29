@@ -194,6 +194,6 @@ def run(engine_result):
         color="Arah_Risiko",
         color_discrete_map={"Asosiasi Positif": "#D85A30", "Asosiasi Negatif": "#99ccff"},
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     return hasil_topsis
